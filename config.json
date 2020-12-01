@@ -1,0 +1,20 @@
+{
+    "banks":[
+        {
+            "name":"hdfc",
+            "values":{
+                "transaction":"txn",
+                "credit":"cr",
+                "debit":"dr"
+            }
+        },
+        {
+            "name":"dbs",
+            "values":{
+                "transaction":"name",
+                "credit":"credit",
+                "debit":"debit"
+            }
+        }
+    ]
+}
