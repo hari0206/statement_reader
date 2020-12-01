@@ -1,4 +1,4 @@
-import xlrd, re
+import xlrd, re, json
 
 workbook = xlrd.open_workbook('hdfcstatement.xls')
 workbook = xlrd.open_workbook('hdfcstatement.xls', on_demand = True)
@@ -27,4 +27,7 @@ for x in data_preview:
     check = re.search(r'(\d+/\d+/\d+)', str(x['Date']))
     if check:
         data.append(x)
+        
+with open('result_hdfc.json', 'w') as f:
+    json.dump(data, f)
 print(data, len(data))

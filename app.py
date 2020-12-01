@@ -1,7 +1,9 @@
-import xlrd, re
+import xlrd, json
 
-workbook = xlrd.open_workbook('hdfcstatement.xls')
-workbook = xlrd.open_workbook('hdfcstatement.xls', on_demand = True)
+
+
+workbook = xlrd.open_workbook(r"C:\Users\lenovo\Downloads\Kotak-converted.xlsx")
+workbook = xlrd.open_workbook(r"C:\Users\lenovo\Downloads\Kotak-converted.xlsx", on_demand = True)
 worksheet = workbook.sheet_by_index(0)
 first_row = []
 for col in range(worksheet.ncols):
@@ -10,8 +12,8 @@ for col in range(worksheet.ncols):
             row = sheet.row(rowidx)
             for colidx, cell in enumerate(row):
                 if cell.value == "Date" :
-                    first_row.append( worksheet.cell_value(rowidx,col) )
-data_preview =[]
+                    first_row.append(worksheet.cell_value(rowidx,col))
+data =[]
 for sheet in workbook.sheets():
     for rowidx in range(sheet.nrows):
         row = sheet.row(rowidx)
@@ -21,10 +23,18 @@ for sheet in workbook.sheets():
                     elm = {}
                     for col in range(worksheet.ncols):
                         elm[first_row[col]]=worksheet.cell_value(row,col)
-                    data_preview.append(elm) 
-data=[]
-for x in data_preview:
-    check = re.search(r'(\d+/\d+/\d+)', str(x['Date']))
-    if check:
-        data.append(x)
+                    data.append(elm)          
+for x in data:
+    for y in data:
+        if x['Date']=='':
+            res = {key: str(x[key]) + str(y.get(key, '')) for key in x.keys()}
+for x in data:
+    if x['Date'] == '':
+        data.remove(x)  
+for x in data:
+    x.pop('')
+    
+with open('results/result_kotak.json', 'w') as f:
+    json.dump(data, f)
+
 print(data, len(data))

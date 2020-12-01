@@ -1,4 +1,4 @@
-import xlrd
+import xlrd, json
 
 
 workbook = xlrd.open_workbook(r'C:\Users\lenovo\Desktop\Banking\dbsstatement.xls')
@@ -32,5 +32,8 @@ for x in data:
         data.remove(x)  
 for x in data:
     x.pop('')
+
+with open('result_dbs.json', 'w') as f:
+    json.dump(data, f)
 
 print(data, len(data))
